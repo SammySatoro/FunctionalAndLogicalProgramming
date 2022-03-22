@@ -1,9 +1,10 @@
 open System
 
 let processAnswer  answer = 
-    if (answer = "F#" || answer = "Prolog") then "Sycophant!"
-    else "You're goddamn right!"
-
+    match answer with
+        |"F#"|"Prolog"-> "Sycophant!"
+        |other -> "You're goddamn psychopath!"
+   
 [<EntryPoint>]
 let main argv =
     printf "Which programming language do you like the most?: " 
