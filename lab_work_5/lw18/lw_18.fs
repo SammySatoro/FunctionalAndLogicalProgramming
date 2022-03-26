@@ -17,8 +17,22 @@ let FirstMethod (n:int) func cond initial =
         processDivisorsOfNumber n subFunc initial
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+//Second Method vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+let secondMethod n cond = 
+  let rec loop n cond curMin = 
+    if n % 10 = 0 then curMin
+    else 
+      let nextMin = 
+        if (curMin > (n % 10) && cond (n % 10)) then n % 10
+        else curMin
+      let nextN = n / 10
+      loop nextN cond nextMin
+  loop n cond n % 10
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 [<EntryPoint>]
 let main argv =           
     let n = (FirstMethod 15 (fun x y -> x + 1) (fun d -> d % 3 <> 0) 0)
     printfn "Number of divisors not divisible by 3: %A" n // 1, 5 (2)
+    printfn "Minimal odd of number: %A" (secondMethod 515633454 (fun c -> c % 2 <> 0)) (1)
     0 
