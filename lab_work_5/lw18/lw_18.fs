@@ -34,5 +34,5 @@ let secondMethod n cond =
 let main argv =           
     let n = (FirstMethod 15 (fun x y -> x + 1) (fun d -> d % 3 <> 0) 0)
     printfn "Number of divisors not divisible by 3: %A" n // 1, 5 (2)
-    printfn "Minimal odd of number: %A" (secondMethod 515633454 (fun c -> c % 2 <> 0)) (1)
+    printfn "Minimal odd of number: %A" (secondMethod 515633454 (fun c -> c % 2 <> 0))// (1)
     0 
