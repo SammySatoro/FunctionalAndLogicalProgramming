@@ -58,7 +58,10 @@ let thirdMethod n =
     if curDiv <= 0 then sum
     else 
       let nextSum = 
-        sum + (if (n % curDiv = 0 && findGCD (processDigits n (fun x y -> x + y) 0) curDiv = 1 &&  findGCD (processDigits n (fun x y -> x * y) 1) curDiv <> 1) then curDiv else 0) 
+        sum + (if (n % curDiv = 0 && 
+                    findGCD (processDigits n (fun x y -> x + y) 0) curDiv = 1 &&  
+                    findGCD (processDigits n (fun x y -> x * y) 1) curDiv <> 1) then curDiv 
+                    else 0) 
       let nextDiv = curDiv - 1
       loop n nextSum nextDiv
   loop n 0 n
@@ -68,7 +71,7 @@ let main argv =
 //First method
     let n = (FirstMethod 15 (fun x y -> x + 1) (fun d -> d % 3 <> 0) 0)
     printfn "Number of divisors not divisible by 3: %A" n // 1, 5 (2)
- //Second method   
+//Second method   
     printfn "Minimal odd of number: %A" (secondMethod 515633454 (fun c -> c % 2 <> 0))// (1)
 //Third method
     printfn "Sum of divisors that are mutually prime with sum and not mutually prime with product of the number's digits: %A" (thirdMethod 14) // 14   1 2 7 14
