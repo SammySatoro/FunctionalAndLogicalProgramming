@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <WarnOn>3390;$(WarnOn)</WarnOn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="lw_20_53.fs" />
+    <Compile Include="lw_19_49.fs" />
+    <Compile Include="lw_18_41.fs" />
+    <Compile Include="lw_17_29.fs" />
+    <Compile Include="lw_16_26.fs" />
+    <Compile Include="lw_15_19.fs" />
+    <Compile Include="lw_14_17.fs" />
+    <Compile Include="lw_11.fs" />
+    <Compile Include="lw_13_12.fs" />
+    <Compile Include="lw_12_5.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+</Project>
