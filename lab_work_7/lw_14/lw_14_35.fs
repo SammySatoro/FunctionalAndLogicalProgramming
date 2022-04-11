@@ -5,4 +5,6 @@ let findClosest item list =
     List.item (List.findIndex (fun i -> i = List.min differences) differences) list
 
 let ForDemo14 =
-    printfn "%A" (findClosest 1.0 [1.4;-2.0;3.33;-4.0;0.7;4.0])    
+    let R = 1.0
+    printfn "%A" (findClosest R [1.4;-2.0;3.33;-4.0;0.7;4.0])
+    
