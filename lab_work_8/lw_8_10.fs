@@ -81,13 +81,36 @@ type VehiclePassport(i:int, name:string, model:string, category:string, yearOfMa
             |_ -> false
         override this.GetHashCode () = hash this.ID
 
+
+[<AbstractClass>]
+type Document() =    
+    abstract member SeacrhDoc: VehiclePassport -> bool
+
+type ListDocument(list: List<VehiclePassport> ) =
+    inherit Document()
+    member this.list: List<VehiclePassport> = list
+    override this.SeacrhDoc(doc: VehiclePassport) =
+        this.list |> List.exists (fun d -> d = doc)
+    
+type ArrayDocument(arr: array<VehiclePassport> ) =
+    inherit Document()
+    member this.arr: array<VehiclePassport> = arr
+    override this.SeacrhDoc(doc: VehiclePassport) =
+         this.arr |> Array.exists (fun d -> d = doc)
+
+type SetDocument(set: Set<VehiclePassport> ) =
+    inherit Document()
+    member this.set: Set<VehiclePassport> = set
+    override this.SeacrhDoc(doc: VehiclePassport) =
+         this.set |> Set.exists (fun d -> d = doc)
+
 let ForDemo =
     let rand = System.Random()
     let vehicles = List.init(10) (fun v -> VehiclePassport((rand.Next(100, 1000)), "unnamed", "unknown", "undefined", (rand.Next(2000, 2022)), 0.0001))
     //vehicles |> List.iter (fun v -> v.Print())  
     //Equation by ID and YearOfManufacture
     //Comparison by ID
-    printfn "%A" ((new VehiclePassport(1, "", "", "", 10, 0.0)).Equals(new VehiclePassport(2, "", "", "", 10, 0.4))) // false
-    printfn "%A" ((new VehiclePassport(1, "", "", "", 10, 0.0)).Equals(new VehiclePassport(1, "", "", "", 10, 0.4))) // true
-    printfn "%A" (compare (new VehiclePassport(10, "", "", "", 20, 0.0)) (new VehiclePassport(4, "", "", "", 40, 0.4)))// 1
-    
+    //printfn "%A" ((new VehiclePassport(1, "", "", "", 10, 0.0)).Equals(new VehiclePassport(2, "", "", "", 10, 0.4))) // false
+    //printfn "%A" ((new VehiclePassport(1, "", "", "", 10, 0.0)).Equals(new VehiclePassport(1, "", "", "", 10, 0.4))) // true
+    //printfn "%A" (compare (new VehiclePassport(10, "", "", "", 20, 0.0)) (new VehiclePassport(4, "", "", "", 40, 0.4)))// 1
+    0
