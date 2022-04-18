@@ -1,5 +1,6 @@
 module lw_8_10
 open System.Text.RegularExpressions
+//open System.Diagnostics
 
 type IPrint = interface
     abstract member Print: unit -> unit
@@ -84,26 +85,44 @@ type VehiclePassport(i:int, name:string, model:string, category:string, yearOfMa
 
 [<AbstractClass>]
 type Document() =    
-    abstract member SeacrhDoc: VehiclePassport -> bool
+    abstract member SearchDoc: VehiclePassport -> bool
 
 type ListDocument(list: List<VehiclePassport> ) =
     inherit Document()
     member this.list: List<VehiclePassport> = list
-    override this.SeacrhDoc(doc: VehiclePassport) =
+    override this.SearchDoc(doc: VehiclePassport) =
         this.list |> List.exists (fun d -> d = doc)
     
 type ArrayDocument(arr: array<VehiclePassport> ) =
     inherit Document()
     member this.arr: array<VehiclePassport> = arr
-    override this.SeacrhDoc(doc: VehiclePassport) =
+    override this.SearchDoc(doc: VehiclePassport) =
          this.arr |> Array.exists (fun d -> d = doc)
 
 type SetDocument(set: Set<VehiclePassport> ) =
     inherit Document()
     member this.set: Set<VehiclePassport> = set
-    override this.SeacrhDoc(doc: VehiclePassport) =
+    override this.SearchDoc(doc: VehiclePassport) =
          this.set |> Set.exists (fun d -> d = doc)
 
+
+type BinaryDocument(list: List<VehiclePassport> ) =
+    inherit Document()
+    member this.list = list |> List.sortBy (fun (d:VehiclePassport) -> d.ID)
+    override this.SearchDoc(doc) =    
+        let rec binaryLoop (l: List<VehiclePassport>) (item:VehiclePassport) = 
+            match (List.length l) with
+                 |0 -> false
+                 |i ->
+                    let middle = i / 2
+                    match sign <| compare item l.[middle] with
+                    |0 -> true
+                    |1 -> binaryLoop l.[.. middle - 1] item
+                    |_ -> binaryLoop l.[middle + 1..] item
+        binaryLoop this.list doc     
+    
+                        
+         
 let ForDemo =
     let rand = System.Random()
     let vehicles = List.init(10) (fun v -> VehiclePassport((rand.Next(100, 1000)), "unnamed", "unknown", "undefined", (rand.Next(2000, 2022)), 0.0001))
