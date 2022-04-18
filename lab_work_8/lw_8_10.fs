@@ -1,6 +1,6 @@
-module lw_8_10
+﻿module lw_8_10
 open System.Text.RegularExpressions
-//open System.Diagnostics
+open System.Diagnostics
 
 type IPrint = interface
     abstract member Print: unit -> unit
@@ -120,16 +120,37 @@ type BinaryDocument(list: List<VehiclePassport> ) =
                     |1 -> binaryLoop l.[.. middle - 1] item
                     |_ -> binaryLoop l.[middle + 1..] item
         binaryLoop this.list doc     
-    
-                        
-         
+                          
+  let measureTime (timer: Stopwatch) method doc =
+    timer.Reset()
+    timer.Start()
+    let isFound = method doc
+    timer.Stop()
+    timer.ElapsedMilliseconds
+  
 let ForDemo =
     let rand = System.Random()
-    let vehicles = List.init(10) (fun v -> VehiclePassport((rand.Next(100, 1000)), "unnamed", "unknown", "undefined", (rand.Next(2000, 2022)), 0.0001))
+    let vehicles = List.init(100000) (fun v -> VehiclePassport((rand.Next(100, 100000)), "unnamed", "unknown", "undefined", (rand.Next(2000, 20000)), 0.0001))
     //vehicles |> List.iter (fun v -> v.Print())  
     //Equation by ID and YearOfManufacture
     //Comparison by ID
     //printfn "%A" ((new VehiclePassport(1, "", "", "", 10, 0.0)).Equals(new VehiclePassport(2, "", "", "", 10, 0.4))) // false
     //printfn "%A" ((new VehiclePassport(1, "", "", "", 10, 0.0)).Equals(new VehiclePassport(1, "", "", "", 10, 0.4))) // true
     //printfn "%A" (compare (new VehiclePassport(10, "", "", "", 20, 0.0)) (new VehiclePassport(4, "", "", "", 40, 0.4)))// 1
+
+    let listDoc = ListDocument(vehicles)
+    let arrayDoc = ArrayDocument(List.toArray vehicles)
+    let binaryDoc = BinaryDocument(vehicles)
+    let setDoc = SetDocument(Set.ofList vehicles)
+
+    let timer = new Stopwatch()
+
+    let vehicle = VehiclePassport(500, "unnamed", "unknown", "undefined", 10322, 0.0001)
+
+    printfn "List search time %d ms" (measureTime timer listDoc.SearchDoc vehicle)
+    printfn "Array search time %d ms" (measureTime timer arrayDoc.SearchDoc vehicle)
+    printfn "Binary search time %d ms" (measureTime timer binaryDoc.SearchDoc vehicle)
+    printfn "Set search time %d ms" (measureTime timer setDoc.SearchDoc vehicle)
+    timer.Reset()
     0
+    
