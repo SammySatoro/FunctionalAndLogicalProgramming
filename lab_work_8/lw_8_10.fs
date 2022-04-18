@@ -90,3 +90,4 @@ let ForDemo =
     printfn "%A" ((new VehiclePassport(1, "", "", "", 10, 0.0)).Equals(new VehiclePassport(2, "", "", "", 10, 0.4))) // false
     printfn "%A" ((new VehiclePassport(1, "", "", "", 10, 0.0)).Equals(new VehiclePassport(1, "", "", "", 10, 0.4))) // true
     printfn "%A" (compare (new VehiclePassport(10, "", "", "", 20, 0.0)) (new VehiclePassport(4, "", "", "", 40, 0.4)))// 1
+    
