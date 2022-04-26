@@ -1,21 +1,30 @@
 module lw_17_29
 
-let findMaxItemIndex list =
-    let rec loop list max index maxIndex = 
+let findMax list = 
+    let rec loop list min = 
         match list with
         |head::tail ->
-            let nextMax = if max <= head then head else max
-            let nextMaxIndex = if max <= head then index else maxIndex
+            let nextMin = if min <= head then head else min
+            loop tail nextMin
+        |[] -> min
+    loop list list.Head
+
+let findMinInds list a b= 
+    let rec loop list indList index max =
+        match list with
+        |head::tail -> 
+            let nextIndList = if head = max && a<= index && index <= b then (indList @ [index]) else indList @ []
             let nextIndex = index + 1
-            loop tail nextMax nextIndex nextMaxIndex
-        |[] -> maxIndex
-    loop list list.Head 0 0
+            loop tail nextIndList nextIndex max
+        |[] -> indList
+    loop list [] 0 (findMax list)
 
 let containsMax list a b = 
-    let max = findMaxItemIndex list
-    if a <= max && max <= b then true
-    else false
+    let maxs = findMinInds list a b
+    match maxs with
+    |[] -> false
+    |_ -> true
 
 let ForDemo17_29 = 
-    let list = [0;1;-50;-50;4;5;6;-50;5;-50]
+    let list = [0;1;-50;-50;4;3;5;-50;5;-50]
     printfn "%A" (containsMax list 1 6)
